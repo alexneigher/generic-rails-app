@@ -15,8 +15,7 @@ bundle install
 rake assets:precompile
 
 # Create the database
-rake db:create
-rake db:migrate
+rake db:setup
 rake db:seed
 
 # Run the app
