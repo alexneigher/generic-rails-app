@@ -1,0 +1,39 @@
+<% @products.each do |product| %>
+<div class="col-lg-4">
+  <div class="bs-component">
+    <div class="panel panel-<%= (product.featured?) ? 'default' : 'default' %>">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= product.name %>
+          <% if (product.featured?) %><span class="label label-success">Featured</span><% end %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <center>
+        <div class="image">
+          <img src="<%= product.image %>" class="product-image" />
+        </div>
+        </center>
+        <br />
+        <ul class="list-group">
+          <li class="list-group-item"><strong>Manufacturer:</strong> <%= product.manufacturer %></li>
+          <li class="list-group-item"><strong>Price:</strong> $<%= '%.2f' % product.price %></li>
+          <li class="list-group-item">
+            <span class="badge"><%= product.quantity %></span>
+            Quantity in stock
+          </li>
+        </ul>
+      </div>
+      <div class="panel-footer">
+        <div class="rating"><strong>Rating: </strong>
+          <% product.rating.round(0).times do %>
+          &#9733;
+          <% end %>
+          <% (5-product.rating.round(0)).times do %>
+          &#9734;
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

@@ -1,0 +1,4 @@
+1. Make sure that you have bundler installed: `gem install bundler`
+2. Run `bundle install` to install required gems
+3. Create and set up your database with `rake db:setup`
+

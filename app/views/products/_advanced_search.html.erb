@@ -1,0 +1,63 @@
+<div class="well">
+
+  <h4>Advanced</h4>
+
+  <div class="form-group">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" id="featured" name="featured" <%= (params[:featured].nil?) ? '' : 'checked' %> > Only <span class="label label-success">Featured</span> products
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-12 control-label">Price</label>
+    <div class="row">
+      <div class="col-lg-5">
+        <input class="form-control" id="minPrice" name="minPrice" placeholder="min" type="text" value="<%= (params[:minPrice].nil? || params[:minPrice].empty? ) ? '' : params[:minPrice] %>">
+      </div>
+      <div class="col-lg-2">to</div>
+      <div class="col-lg-5">
+        <input class="form-control" id="maxPrice" name="maxPrice" placeholder="max" type="text" value="<%= (params[:maxPrice].nil? || params[:maxPrice].empty? ) ? '' : params[:maxPrice] %>">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-12 control-label">Stock</label>
+    <div class="row">
+      <div class="col-lg-5">
+        <input class="form-control" id="minStock" name="minStock" placeholder="min" type="text" value="<%= (params[:minStock].nil? || params[:minStock].empty? ) ? '' : params[:minStock] %>">
+      </div>
+      <div class="col-lg-2">to</div>
+      <div class="col-lg-5">
+        <input class="form-control" id="maxStock" name="maxStock" placeholder="max" type="text" value="<%= (params[:maxStock].nil? || params[:maxStock].empty? ) ? '' : params[:maxStock] %>">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-12 control-label">Rating</label>
+    <div class="row">
+      <div class="col-lg-12">
+        <% 4.times do |i| %>
+        <div class="radio">
+          <label>
+            <input name="ratings" id="minRating" value="<%= (4-i) %>" <%= (params[:ratings].to_i == (4-i)) ? 'checked' : '' %> type="radio">
+            <% (4-i).times do %>&#9733;<% end %> and up
+          </label>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-lg-12">
+        <%= submit_tag "Search Products", class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+
+</div>

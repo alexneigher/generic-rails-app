@@ -1,0 +1,60 @@
+<%- model_class = Product -%>
+<%= form_tag("search", :method => "post", id: "search-form", class: "form-group") do %>
+<%= render 'header.html.erb' %>
+
+<div class="row">
+  <div class="col-lg-3">
+    <%= render 'advanced_search.html.erb' %>
+  </div>
+  <div class="col-lg-9">
+    <% if @products.count == 0 %>
+    <div class="alert alert-dismissible alert-danger">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Oh snap!</strong> Your search did not find any matching documents. Try tweaking your terms and see if you have more luck.
+    </div>
+    <center>
+      <img src="/assets/404-cat.gif" />
+    </center>
+    <% end %>
+    <% Product.get_results(@results).each do |product| %>
+    <div class="col-lg-4">
+      <div class="bs-component">
+        <div class="panel panel-<%= (product.featured?) ? 'default' : 'default' %>">
+          <div class="panel-heading">
+            <h3 class="panel-title"><%= product.name %>
+              <% if (product.featured?) %><span class="label label-success">Featured</span><% end %>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <center>
+            <div class="image">
+              <img src="<%= product.image %>" class="product-image" />
+            </div>
+            </center>
+            <br />
+            <ul class="list-group">
+              <li class="list-group-item"><strong>Manufacturer:</strong> <%= product.manufacturer %></li>
+              <li class="list-group-item"><strong>Price:</strong> $<%= '%.2f' % product.price %></li>
+              <li class="list-group-item">
+                <span class="badge"><%= product.quantity %></span>
+                Quantity in stock
+              </li>
+            </ul>
+          </div>
+          <div class="panel-footer">
+            <div class="rating"><strong>Rating: </strong>
+              <% product.rating.round(0).times do %>
+              &#9733;
+              <% end %>
+              <% (5-product.rating.round(0)).times do %>
+              &#9734;
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
+<% end %>

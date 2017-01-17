@@ -4,7 +4,20 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
+
+    @results = Product.all
+    @results = @results.where("name = ?", params[:search]) unless params[:search].nil? || params[:search].empty?
+    @results = @results.where(:featured => true) if params[:featured] == "on"
+    @results = @results.where("price >= #{params[:minPrice].to_d}")    unless params[:minPrice].nil? || params[:minPrice].empty?
+    @results = @results.where("price <= #{params[:maxPrice].to_d}")    unless params[:maxPrice].nil? || params[:maxPrice].empty?
+    @results = @results.where("quantity >= #{params[:minStock].to_i}") unless params[:minStock].nil? || params[:minStock].empty?
+    @results = @results.where("quantity <= #{params[:maxStock].to_i}") unless params[:maxStock].nil? || params[:maxStock].empty?
+    @results = @results.where("rating >= #{params[:ratings].to_d}")    unless params[:ratings].nil?
+
+    @pages = (@results.count / 10.to_f).ceil
+    @page = (params[:page].nil? || !params[:page].to_i) ? 1 : params[:page].to_i
+    @products = Product.get_results(@results).offset((@page - 1) * 10).limit(10)
+
   end
 
   # GET /products/1
@@ -69,6 +82,6 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:name, :price, :quantity)
+      params.require(:product).permit(:name, :price, :quantity, :manufacturer)
     end
 end

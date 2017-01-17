@@ -1,0 +1,17 @@
+<center>
+  <ul class="pagination">
+    <% if @page != 1 %>
+      <button type="submit" name="page" value="<%= (@page - 1) %>" class="btn btn-default">&laquo;</button>
+    <% end %>
+    <% @startCount = (@page > 2 && @page < (@pages-2)) ? (@page - 2) : ((@page <= 2) ? 1 : (@pages - 4 > 0) ? @pages - 4 : 1) %>
+    <% @dispPages = (@pages >= 5) ? 5 : @pages %>
+    <% @dispPages.times do |i| %>
+      <% if (@startCount + i) <= @pages %>
+        <button type="submit" name="page" value="<%= (@startCount + i) %>" class="btn btn-<%= (@page == (@startCount + i)) ?  'primary' : 'default' %>"><%= (@startCount + i) %></button>
+      <% end %>
+    <% end %>
+    <% if @page != @pages && @products.count > 10 %>
+      <button type="submit" name="page" value="<%= (@page + 1) %>" class="btn btn-default">&raquo;</button>
+    <% end %>
+  </ul>
+</center>
